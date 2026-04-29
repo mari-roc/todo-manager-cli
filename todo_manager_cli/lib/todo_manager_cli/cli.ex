@@ -37,6 +37,9 @@ defmodule TodoManagerCli.Cli do
   def list_tasks(tasks) do
     IO.puts("Listing tasks...")
     Enum.each(tasks, fn task -> IO.puts("- #{task}") end)
+    if Enum.empty?(tasks) do
+      IO.puts("No tasks found.")
+    end
     menu(tasks)
   end
   def remove_task(tasks) do
