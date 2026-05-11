@@ -31,8 +31,9 @@ defmodule TodoManagerCli.Cli do
       IO.gets("What task do you want to add?\n")
       |>String.trim
     IO.puts("Adding task: #{newtask}\n")
-    list = [newtask | tasks]
-    list_tasks(list)
+    updated_tasks =
+      TodoManagerCli.Tasks.new_task(tasks, newtask)
+    menu(updated_tasks)
   end
   def list_tasks(tasks) do
     IO.puts("Listing tasks...")
@@ -46,10 +47,10 @@ defmodule TodoManagerCli.Cli do
     removetask =
       IO.gets("What task do you want to remove?\n")
       |>String.trim
-    list = Enum.filter(tasks, fn task -> task != removetask end)
     IO.puts("Removing task: #{removetask}\n")
-    list_tasks(list)
-    menu(list)
+    updated_tasks =
+      TodoManagerCli.Tasks.remove_task(tasks, removetask)
+    menu(updated_tasks)
   end
   def exit do
     IO.puts("Exiting...")
